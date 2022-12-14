@@ -116,6 +116,3 @@ fetch(url)
         btnAdd.addEventListener('click', userAdd);
     })
     .catch(err => console.log('Hubo un problema con la petición Fetch:' + err.message))
-
-
-

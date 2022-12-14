@@ -97,7 +97,15 @@ body {
 
 .container-employess {
     display: grid;
-    grid-template-columns: repeat(5, 2fr);
+    grid-template-columns: repeat(3, 2fr);
     grid-gap: 10px;
 }  
+}
+
+@media screen and (min-width:1920px){
+    .container-employess {
+        display: grid;
+        grid-template-columns: repeat(5, 2fr);
+        grid-gap: 10px;
+    }  
 }
