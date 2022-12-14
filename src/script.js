@@ -37,7 +37,7 @@ function chargeEmployees(employees) {
         btnDelete.className = 'btn btn-danger m-1';
         btnDelete.innerText ='Eliminar'
         pLabel.innerText = 'ID';
-        btnEdition.id =employees[index].id
+        //btnEdition.id =employees[index].id
         
 
         pName.innerText = employee.name;
