@@ -1,28 +1,16 @@
 let url = 'https://6393e57e11ed187986bf9667.mockapi.io/api/curso/employees'
 
+let datoGlobal
 let inputName = document.getElementById('name');
 let inputCity = document.getElementById('city');
 let inputMail = document.getElementById('mail');
 let inputBirthday = document.getElementById('birthday');  
 let labelId = document.getElementById('id');   
 
+
 let containerEmployees = document.getElementById('container-employess'); 
 
-let btnEdit = document.querySelectorAll(".btn-success");
-btnEdit.forEach(botonE => {
-    botonE.addEventListener("click", estoy);
-});
 
-let btnDelete = document.querySelectorAll(".btn-danger");
-btnDelete.forEach(botonD => {
-    botonD.addEventListener("click", deleteUser);
-});
-
-let btnSave = document.getElementById('btnSave');
-btnSave.addEventListener('click', saveUser);
-
-let btnAdd = document.getElementById('btnAdd');
-btnAdd.addEventListener('click', userAdd);
 
 
 function chargeEmployees(employees) {
@@ -73,58 +61,77 @@ function chargeEmployees(employees) {
 function editUser(){
     i=this.value;
     console.log(i)
-    inputName.value = employees[i].name;
-    inputCity.value = employees[i].city;
-    inputMail.value = employees[i].email;
-    inputBirthday.value = employees[i].birthday;
-    labelId.innerText = employees[i].id;
+    inputName.value = datoGlobal[i].name;
+    inputCity.value = datoGlobal[i].city;
+    inputMail.value = datoGlobal[i].email;
+    inputBirthday.value = datoGlobal[i].birthday;
+    labelId.innerText = datoGlobal[i].id;
     labelId.value = i;
 }
 function saveUser(){
-    //console.log(labelId.value);
-    i= labelId.value;
-    employees[i].name = inputName.value;
+    //i=this.value;
+    let i= labelId.value;
+    datoGlobal[i].name = inputName.value;
     inputName.value = " ";
-    employees[i].city = inputCity.value;
+    datoGlobal[i].city = inputCity.value;
     inputCity.value = " ";
-    employees[i].email = inputMail.value;
+    datoGlobal[i].email = inputMail.value;
     inputMail.value = " ";
-    employees[i].birthday = inputBirthday.value;
+    datoGlobal[i].birthday = inputBirthday.value;
     inputBirthday.value = " ";
 
     containerEmployees.innerHTML =" ";
-    chargeEmployees() 
+    chargeEmployees(datoGlobal);
+    obtenerDatos() 
 }
 function deleteUser(){
-    i= labelId.value;
-    employees.splice(i,1)
+    i=this.value;
+    console.log(i)
+    datoGlobal.splice(i,1)
     containerEmployees.innerHTML =" ";
-    chargeEmployees() 
+    chargeEmployees(datoGlobal) 
+    obtenerDatos()
 }
 function userAdd(){
-    console.log(employees[2])
-    let aux = {name: inputName.value , city: inputCity.value, birthday: inputBirthday.value, email: inputMail.value, id: (employees.length+1)}
-    employees.push (aux)
+    let aux = {name: inputName.value , city: inputCity.value, birthday: inputBirthday.value, email: inputMail.value, id: (datoGlobal.length+1)}
+    datoGlobal.push(aux)
     containerEmployees.innerHTML =" ";
-    chargeEmployees() 
+    chargeEmployees(datoGlobal)
+    //obtenerDatos()
 
 }
 
 function estoy() {
-    alert("ESTO ACA")
+    alert("ESTOY ACA")
 }
+
+let btnSave = document.getElementById('btnSave');
+btnSave.addEventListener('click', saveUser);
+
+let btnAdd = document.getElementById('btnAdd');
+btnAdd.addEventListener('click', userAdd);
+
 
 
 const obtenerDatos = async () => {
     const arrayDatos = await fetch(url).then(res => res.json())
-    chargeEmployees(arrayDatos);
+
+    datoGlobal = arrayDatos;
+
+    chargeEmployees(datoGlobal);
+
+    let btnEdit = document.querySelectorAll(".btn-success");
+    btnEdit.forEach(boton => {
+    boton.addEventListener("click", editUser);
+    });
+
+    let btnDelete = document.querySelectorAll(".btn-danger");
+    btnDelete.forEach(boton => {
+    boton.addEventListener("click", deleteUser); 
+    });
 }
 
 
-/* let arrayDatos = fetch(url)
-.then (response => response.json())
-.catch(err => console.log('Hubo un problema con la petición Fetch:' + err.message)) 
- */
 
 obtenerDatos()
 
